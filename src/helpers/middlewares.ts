@@ -10,6 +10,12 @@ export const middlewares = {
   isMine
 };
 
+/**
+ * Revisa si hay un token valido y fija el req.userid al id del usuario dueño del token
+ * @param {Request}  req  Se espera que contenga el token en el body o en la cabezera
+ * @param {Response} res  se usara para devolver un error de autenticacion en caso de fallar el token
+ * @param {Function} next Es la siguiente ruta en espera de este middleware
+ */
 function logged(req: Request, res: Response, next: Function) {
   let token = req.body.token || req.headers['x-access-token'];
   if (token) {
@@ -31,6 +37,13 @@ function logged(req: Request, res: Response, next: Function) {
   }
 }
 
+/**
+ * Comprueba que el recurso solicitado pertenezca al usuario dueño del token enviado
+ * y verifica que dicho recurso exista
+ * @param {Request}  req  Se espera que contenga un body.bookmark_id y un userid
+ * @param {Response} res  Se usara para devolver un error de autenticacion, parametros o NOT_FOUND
+ * @param {Function} next ES la siguiente ruta en espera de que esta verificacion pase
+ */
 function isMine(req: Request, res: Response, next: Function) {
   const docID = req.params.bookmark_id;
   const userID = req['userid'];

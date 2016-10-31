@@ -8,6 +8,9 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   admin: Boolean
 });
+/**
+ * Siempre encriptaremos la contraseña antes de salvar un Usuario
+ */
 UserSchema.pre('save', function(next) {
   let currentUser = this;
 
@@ -22,6 +25,9 @@ UserSchema.pre('save', function(next) {
   });
 });
 
+/**
+ * Metodo para comprobar la contraseña encriptada con un String cualquiera
+ */
 UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   bcrypt.compare(candidatePassword, this.password, (err, isMatch) => {
     if (err) { return cb(err); }
@@ -29,10 +35,5 @@ UserSchema.methods.comparePassword = function(candidatePassword, cb) {
   });
 };
 const Users = mongoose.model('User', UserSchema);
-export default Users;
 
-export interface IUser {
-  name: string,
-    password: string,
-    admin: boolean
-}
+export default Users;

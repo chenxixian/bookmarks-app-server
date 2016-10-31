@@ -15,12 +15,3 @@ const BookmarkSchema = new Schema({
 const Bookmarks = mongoose.model('Bookmark', BookmarkSchema);
 
 export default Bookmarks;
-export interface IBookmark {
-  name: string,
-    url: string,
-    category: string,
-    createdAt: Date,
-    creator: mongoose.Schema.Types.ObjectId,
-    __v: number,
-    _id: string,
-}

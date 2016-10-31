@@ -32,25 +32,23 @@ const SERVER = http.createServer(app);
 mongoose.connect(Config.mongodb);
 mongoose.Promise = global.Promise;
 const DB = mongoose.connection;
+
 /**
  * Listen on provided port, on all network interfaces.
  */
-
 SERVER.listen(PORT);
 SERVER.on('error', onError);
 SERVER.on('listening', onListening);
 DB.on('error', console.log.bind(color.red));
-DB.on('connected', ()=> console.log(color.bgBlack.green('MongoDB Connected')));
-DB.on('disconnected', ()=> console.log(color.bgBlack.green('Closing MongoDB connection')));
-DB.on('reconnected', ()=> console.log(color.bgBlack.green('Reconecting')))
-
-
+DB.on('connected', () => console.log(color.bgBlack.green('MongoDB Connected')));
+DB.on('disconnected', () => console.log(color.bgBlack.green('Closing MongoDB connection')));
+DB.on('reconnected', () => console.log(color.bgBlack.green('Reconecting')));
 
 /**
  * Close MongoDB connection on proccess.exit
  */
-process.on('SIGINT', ()=> {
-  DB.close(()=> {
+process.on('SIGINT', () => {
+  DB.close(() => {
     console.log(color.bgBlack.bold.green('MongoDB Disconnected'));
     process.exit(0);
   });

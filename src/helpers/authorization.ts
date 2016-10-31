@@ -8,11 +8,6 @@ import { logError } from './handlers';
 
 import app from '../';
 
-interface loginError {
-  errorCode: number
-};
-
-
 export const tokens = {
   decode,
   encode
